@@ -1,0 +1,22 @@
+{
+  "name": "vedvyas-prisma",
+  "version": "1.0.0",
+  "description": "DB schema for vedvyas",
+  "main": "index.js",
+  "scripts": {
+    "generate": "npx prisma generate",
+    "postinstall": "npm run generate"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "author": "Sunny Sharma",
+  "license": "ISC",
+  "devDependencies": {
+    "@prisma/client": "^5.10.2",
+    "prisma": "^5.10.2"
+  },
+  "peerDependencies": {
+    "@prisma/client": ">=5"
+  }
+}
