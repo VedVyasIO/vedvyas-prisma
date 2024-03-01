@@ -44,11 +44,10 @@ model EmailLogin {
 }
 
 model SocialLogin {
-  userId         String  @unique
+  userId         String @unique
   provider       String
   providerUserId String
-  accessToken    String?
-  user           User    @relation(fields: [userId], references: [id])
+  user           User   @relation(fields: [userId], references: [id])
 }
 
 model LoginAttempt {
