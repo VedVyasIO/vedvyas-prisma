@@ -1,6 +1,6 @@
 {
   "name": "vedvyas-prisma",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "DB schema for vedvyas",
   "main": "index.js",
   "scripts": {

@@ -89,7 +89,7 @@ model TagCategory {
 
 model Tag {
   id              String           @id
-  name            String           @unique
+  name            String
   tagCategory     TagCategory      @relation(fields: [tagCategoryId], references: [id])
   tagCategoryId   String
   userPreferences UserPreference[]
