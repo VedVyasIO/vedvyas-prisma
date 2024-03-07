@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "generate": "npx prisma generate",
-    "postinstall": "npm run generate"
+    "postinstall": "npm run generate",
+    "dev-migrate": "npx prisma migrate dev"
   },
   "publishConfig": {
     "access": "restricted"

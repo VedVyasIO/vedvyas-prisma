@@ -105,15 +105,16 @@ model UserPreference {
 }
 
 model Topic {
-  id          String     @id
-  title       String     @unique
-  uid         String     @unique
-  description String?    @db.Text
-  image       String?    @db.Text
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  topicTags   Topictag[]
-  playlists   Playlist[]
+  id                  String                @id
+  title               String                @unique
+  uid                 String                @unique
+  description         String?               @db.Text
+  image               String?               @db.Text
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  topicTags           Topictag[]
+  playlists           Playlist[]
+  UserVideoSuggestion UserVideoSuggestion[]
 }
 
 model Topictag {
@@ -161,6 +162,8 @@ model UserVideoSuggestion {
   id        String   @id
   url       String
   urlType   String
+  topic     Topic    @relation(fields: [topicId], references: [id])
+  topicId   String
   addedBy   User     @relation(fields: [userId], references: [id])
   userId    String
   published Boolean  @default(false)
