@@ -166,7 +166,7 @@ model UserVideoSuggestion {
   topicId   String
   addedBy   User     @relation(fields: [userId], references: [id])
   userId    String
-  published Boolean  @default(false)
+  status    STATUS   @default(PENDING)
   createdAt DateTime @default(now())
 }
 
@@ -177,4 +177,10 @@ model BookmarkedPlaylist {
   playlist   Playlist @relation(fields: [playlistId], references: [id])
   playlistId String
   createdAt  DateTime @default(now())
+}
+
+enum STATUS {
+  APPROVED
+  REJECTED
+  PENDING
 }
