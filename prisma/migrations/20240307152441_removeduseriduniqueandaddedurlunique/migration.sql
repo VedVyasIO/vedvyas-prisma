@@ -5,5 +5,5 @@
 
 */
 -- CreateIndex
-DROP INDEX [UNIQUE] ON `UserVideoSuggestion`(`userId`)
+ALTER TABLE `UserVideoSuggestion` DROP INDEX `UserVideoSuggestion_userId_key`,
 CREATE UNIQUE INDEX `UserVideoSuggestion_url_key` ON `UserVideoSuggestion`(`url`);
