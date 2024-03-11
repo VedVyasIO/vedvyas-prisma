@@ -5,5 +5,5 @@
 
 */
 -- AlterTable
-ALTER TABLE `UserVideoSuggestion` DROP COLUMN `published`,
+ALTER TABLE `UserVideoSuggestion` DROP COLUMN `published`;
     ADD COLUMN `status` ENUM('APPROVED', 'REJECTED', 'PENDING') NOT NULL DEFAULT 'PENDING';
