@@ -177,6 +177,8 @@ model BookmarkedPlaylist {
   playlist   Playlist @relation(fields: [playlistId], references: [id])
   playlistId String
   createdAt  DateTime @default(now())
+
+  @@unique(name: "bookmarkId", [userId, playlistId])
 }
 
 enum STATUS {
