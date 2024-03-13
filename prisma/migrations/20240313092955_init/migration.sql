@@ -1,9 +1,9 @@
 -- CreateTable
 CREATE TABLE `User` (
-    `id` VARCHAR(191) NOT NULL,
-    `username` VARCHAR(191) NOT NULL,
-    `email` VARCHAR(191) NOT NULL,
-    `name` VARCHAR(191) NOT NULL,
+    `id` VARCHAR(255) NOT NULL,
+    `username` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
     `bio` TEXT NULL,
     `image` TEXT NULL,
     `role` ENUM('USER', 'MANAGER', 'ADMIN') NOT NULL DEFAULT 'USER',
@@ -17,11 +17,11 @@ CREATE TABLE `User` (
 
 -- CreateTable
 CREATE TABLE `EmailLogin` (
-    `userId` VARCHAR(191) NOT NULL,
-    `email` VARCHAR(191) NOT NULL,
-    `password` VARCHAR(191) NOT NULL,
-    `verificationToken` VARCHAR(191) NULL,
-    `resetPasswordToken` VARCHAR(191) NULL,
+    `userId` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL,
+    `password` VARCHAR(255) NOT NULL,
+    `verificationToken` VARCHAR(255) NULL,
+    `resetPasswordToken` VARCHAR(255) NULL,
 
     UNIQUE INDEX `EmailLogin_userId_key`(`userId`),
     UNIQUE INDEX `EmailLogin_email_key`(`email`)
@@ -29,18 +29,18 @@ CREATE TABLE `EmailLogin` (
 
 -- CreateTable
 CREATE TABLE `SocialLogin` (
-    `userId` VARCHAR(191) NOT NULL,
-    `provider` VARCHAR(191) NOT NULL,
-    `providerUserId` VARCHAR(191) NOT NULL,
+    `userId` VARCHAR(255) NOT NULL,
+    `provider` VARCHAR(255) NOT NULL,
+    `providerUserId` VARCHAR(255) NOT NULL,
 
     UNIQUE INDEX `SocialLogin_userId_key`(`userId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `LoginAttempt` (
-    `id` VARCHAR(191) NOT NULL,
-    `userId` VARCHAR(191) NOT NULL,
-    `ipAddress` VARCHAR(191) NOT NULL,
+    `id` VARCHAR(255) NOT NULL,
+    `userId` VARCHAR(255) NOT NULL,
+    `ipAddress` VARCHAR(255) NOT NULL,
     `loginTime` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `successful` BOOLEAN NOT NULL,
 
@@ -49,9 +49,9 @@ CREATE TABLE `LoginAttempt` (
 
 -- CreateTable
 CREATE TABLE `UserReputation` (
-    `id` VARCHAR(191) NOT NULL,
+    `id` VARCHAR(255) NOT NULL,
     `reputationScore` INTEGER NOT NULL DEFAULT 10,
-    `userId` VARCHAR(191) NOT NULL,
+    `userId` VARCHAR(255) NOT NULL,
     `updatedAt` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `UserReputation_userId_key`(`userId`),
@@ -60,9 +60,9 @@ CREATE TABLE `UserReputation` (
 
 -- CreateTable
 CREATE TABLE `VedvyasCoin` (
-    `id` VARCHAR(191) NOT NULL,
+    `id` VARCHAR(255) NOT NULL,
     `coinBalance` INTEGER NOT NULL DEFAULT 0,
-    `userId` VARCHAR(191) NOT NULL,
+    `userId` VARCHAR(255) NOT NULL,
     `updatedAt` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `VedvyasCoin_userId_key`(`userId`),
@@ -71,8 +71,8 @@ CREATE TABLE `VedvyasCoin` (
 
 -- CreateTable
 CREATE TABLE `TagCategory` (
-    `id` VARCHAR(191) NOT NULL,
-    `name` VARCHAR(191) NOT NULL,
+    `id` VARCHAR(255) NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
 
     UNIQUE INDEX `TagCategory_name_key`(`name`),
     PRIMARY KEY (`id`)
@@ -80,27 +80,27 @@ CREATE TABLE `TagCategory` (
 
 -- CreateTable
 CREATE TABLE `Tag` (
-    `id` VARCHAR(191) NOT NULL,
-    `name` VARCHAR(191) NOT NULL,
-    `tagCategoryId` VARCHAR(191) NOT NULL,
+    `id` VARCHAR(255) NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
+    `tagCategoryId` VARCHAR(255) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `UserPreference` (
-    `id` VARCHAR(191) NOT NULL,
-    `userId` VARCHAR(191) NOT NULL,
-    `tagId` VARCHAR(191) NOT NULL,
+    `id` VARCHAR(255) NOT NULL,
+    `userId` VARCHAR(255) NOT NULL,
+    `tagId` VARCHAR(255) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `Topic` (
-    `id` VARCHAR(191) NOT NULL,
-    `title` VARCHAR(191) NOT NULL,
-    `uid` VARCHAR(191) NOT NULL,
+    `id` VARCHAR(255) NOT NULL,
+    `title` VARCHAR(255) NOT NULL,
+    `uid` VARCHAR(255) NOT NULL,
     `description` TEXT NULL,
     `image` TEXT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -113,23 +113,23 @@ CREATE TABLE `Topic` (
 
 -- CreateTable
 CREATE TABLE `Topictag` (
-    `id` VARCHAR(191) NOT NULL,
-    `topicId` VARCHAR(191) NOT NULL,
-    `tagId` VARCHAR(191) NOT NULL,
+    `id` VARCHAR(255) NOT NULL,
+    `topicId` VARCHAR(255) NOT NULL,
+    `tagId` VARCHAR(255) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `Playlist` (
-    `id` VARCHAR(191) NOT NULL,
-    `title` VARCHAR(191) NOT NULL,
-    `uid` VARCHAR(191) NOT NULL,
+    `id` VARCHAR(255) NOT NULL,
+    `title` VARCHAR(255) NOT NULL,
+    `uid` VARCHAR(255) NOT NULL,
     `description` TEXT NULL,
     `image` TEXT NULL,
-    `topicId` VARCHAR(191) NOT NULL,
-    `owner` VARCHAR(191) NOT NULL,
-    `userId` VARCHAR(191) NOT NULL,
+    `topicId` VARCHAR(255) NOT NULL,
+    `owner` VARCHAR(255) NOT NULL,
+    `userId` VARCHAR(255) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NULL,
 
@@ -139,14 +139,14 @@ CREATE TABLE `Playlist` (
 
 -- CreateTable
 CREATE TABLE `Video` (
-    `id` VARCHAR(191) NOT NULL,
-    `title` VARCHAR(191) NOT NULL,
+    `id` VARCHAR(255) NOT NULL,
+    `title` VARCHAR(255) NOT NULL,
     `url` TEXT NULL,
-    `videosrc` VARCHAR(191) NULL,
-    `publishedAt` BIGINT NULL,
+    `videosrc` VARCHAR(255) NULL,
+    `publishedAt` DATETIME(3) NULL,
     `description` TEXT NULL,
     `episodeNo` INTEGER NOT NULL,
-    `playlistId` VARCHAR(191) NOT NULL,
+    `playlistId` VARCHAR(255) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NULL,
 
@@ -155,11 +155,11 @@ CREATE TABLE `Video` (
 
 -- CreateTable
 CREATE TABLE `UserVideoSuggestion` (
-    `id` VARCHAR(191) NOT NULL,
-    `url` VARCHAR(191) NOT NULL,
-    `urlType` VARCHAR(191) NOT NULL,
-    `topicId` VARCHAR(191) NOT NULL,
-    `userId` VARCHAR(191) NOT NULL,
+    `id` VARCHAR(255) NOT NULL,
+    `url` VARCHAR(255) NOT NULL,
+    `urlType` VARCHAR(255) NOT NULL,
+    `topicId` VARCHAR(255) NOT NULL,
+    `userId` VARCHAR(255) NOT NULL,
     `status` ENUM('APPROVED', 'REJECTED', 'PENDING') NOT NULL DEFAULT 'PENDING',
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
@@ -169,10 +169,51 @@ CREATE TABLE `UserVideoSuggestion` (
 
 -- CreateTable
 CREATE TABLE `BookmarkedPlaylist` (
-    `id` VARCHAR(191) NOT NULL,
-    `userId` VARCHAR(191) NOT NULL,
-    `playlistId` VARCHAR(191) NOT NULL,
+    `id` VARCHAR(255) NOT NULL,
+    `userId` VARCHAR(255) NOT NULL,
+    `playlistId` VARCHAR(255) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    UNIQUE INDEX `BookmarkedPlaylist_userId_playlistId_key`(`userId`, `playlistId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `ArticleSource` (
+    `id` VARCHAR(255) NOT NULL,
+    `url` VARCHAR(500) NOT NULL,
+    `name` VARCHAR(255) NOT NULL,
+    `image` TEXT NULL,
+    `status` ENUM('ACTIVE', 'INACTIVE') NOT NULL DEFAULT 'ACTIVE',
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    UNIQUE INDEX `ArticleSource_url_key`(`url`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Article` (
+    `id` VARCHAR(255) NOT NULL,
+    `title` VARCHAR(255) NOT NULL,
+    `url` VARCHAR(500) NOT NULL,
+    `slug` VARCHAR(600) NOT NULL,
+    `content` TEXT NOT NULL,
+    `description` TEXT NULL,
+    `image` TEXT NULL,
+    `pubDate` DATETIME(3) NOT NULL,
+    `articleSourceId` VARCHAR(255) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    UNIQUE INDEX `Article_url_key`(`url`),
+    UNIQUE INDEX `Article_slug_key`(`slug`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `ArticleTag` (
+    `id` VARCHAR(255) NOT NULL,
+    `articeId` VARCHAR(255) NOT NULL,
+    `tagId` VARCHAR(255) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -227,3 +268,12 @@ ALTER TABLE `BookmarkedPlaylist` ADD CONSTRAINT `BookmarkedPlaylist_userId_fkey`
 
 -- AddForeignKey
 ALTER TABLE `BookmarkedPlaylist` ADD CONSTRAINT `BookmarkedPlaylist_playlistId_fkey` FOREIGN KEY (`playlistId`) REFERENCES `Playlist`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Article` ADD CONSTRAINT `Article_articleSourceId_fkey` FOREIGN KEY (`articleSourceId`) REFERENCES `ArticleSource`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ArticleTag` ADD CONSTRAINT `ArticleTag_articeId_fkey` FOREIGN KEY (`articeId`) REFERENCES `Article`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ArticleTag` ADD CONSTRAINT `ArticleTag_tagId_fkey` FOREIGN KEY (`tagId`) REFERENCES `Tag`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

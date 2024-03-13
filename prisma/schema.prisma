@@ -14,10 +14,10 @@ datasource db {
 }
 
 model User {
-  id                   String                @id
-  username             String                @unique
-  email                String                @unique
-  name                 String
+  id                   String                @id @db.VarChar(255)
+  username             String                @unique @db.VarChar(255)
+  email                String                @unique @db.VarChar(255)
+  name                 String                @db.VarChar(255)
   bio                  String?               @db.Text
   image                String?               @db.Text
   role                 Roles                 @default(USER)
@@ -41,101 +41,102 @@ enum Roles {
 }
 
 model EmailLogin {
-  userId             String  @unique
+  userId             String  @unique @db.VarChar(255)
   user               User    @relation(fields: [userId], references: [id])
-  email              String  @unique
-  password           String
-  verificationToken  String?
-  resetPasswordToken String?
+  email              String  @unique @db.VarChar(255)
+  password           String  @db.VarChar(255)
+  verificationToken  String? @db.VarChar(255)
+  resetPasswordToken String? @db.VarChar(255)
 }
 
 model SocialLogin {
-  userId         String @unique
-  provider       String
-  providerUserId String
+  userId         String @unique @db.VarChar(255)
+  provider       String @db.VarChar(255)
+  providerUserId String @db.VarChar(255)
   user           User   @relation(fields: [userId], references: [id])
 }
 
 model LoginAttempt {
-  id         String   @id
+  id         String   @id @db.VarChar(255)
   user       User     @relation(fields: [userId], references: [id])
-  userId     String
-  ipAddress  String
+  userId     String   @db.VarChar(255)
+  ipAddress  String   @db.VarChar(255)
   loginTime  DateTime @default(now())
   successful Boolean
 }
 
 model UserReputation {
-  id              String    @id
+  id              String    @id @db.VarChar(255)
   reputationScore Int       @default(10)
   user            User      @relation(fields: [userId], references: [id])
-  userId          String    @unique
+  userId          String    @unique @db.VarChar(255)
   updatedAt       DateTime? @default(now()) @updatedAt
 }
 
 model VedvyasCoin {
-  id          String    @id
+  id          String    @id @db.VarChar(255)
   coinBalance Int       @default(0)
   user        User      @relation(fields: [userId], references: [id])
-  userId      String    @unique
+  userId      String    @unique @db.VarChar(255)
   updatedAt   DateTime? @default(now()) @updatedAt
 }
 
 model TagCategory {
-  id   String @id
-  name String @unique
+  id   String @id @db.VarChar(255)
+  name String @unique @db.VarChar(255)
   tags Tag[]
 }
 
 model Tag {
-  id              String           @id
-  name            String
+  id              String           @id @db.VarChar(255)
+  name            String           @db.VarChar(255)
   tagCategory     TagCategory      @relation(fields: [tagCategoryId], references: [id])
-  tagCategoryId   String
+  tagCategoryId   String           @db.VarChar(255)
   userPreferences UserPreference[]
   topicTags       Topictag[]
+  articleTags     ArticleTag[]
 }
 
 model UserPreference {
-  id     String @id
+  id     String @id @db.VarChar(255)
   user   User   @relation(fields: [userId], references: [id])
-  userId String
+  userId String @db.VarChar(255)
   tag    Tag    @relation(fields: [tagId], references: [id])
-  tagId  String
+  tagId  String @db.VarChar(255)
 }
 
 model Topic {
-  id                  String                @id
-  title               String                @unique
-  uid                 String                @unique
-  description         String?               @db.Text
-  image               String?               @db.Text
-  createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @updatedAt
-  topicTags           Topictag[]
-  playlists           Playlist[]
-  UserVideoSuggestion UserVideoSuggestion[]
+  id                   String                @id @db.VarChar(255)
+  title                String                @unique @db.VarChar(255)
+  uid                  String                @unique @db.VarChar(255)
+  description          String?               @db.Text
+  image                String?               @db.Text
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  topicTags            Topictag[]
+  playlists            Playlist[]
+  userVideoSuggestions UserVideoSuggestion[]
 }
 
 model Topictag {
-  id      String @id
+  id      String @id @db.VarChar(255)
   topic   Topic  @relation(fields: [topicId], references: [id])
-  topicId String
+  topicId String @db.VarChar(255)
   tag     Tag    @relation(fields: [tagId], references: [id])
-  tagId   String
+  tagId   String @db.VarChar(255)
 }
 
 model Playlist {
-  id          String               @id
-  title       String
-  uid         String               @unique
+  id          String               @id @db.VarChar(255)
+  title       String               @db.VarChar(255)
+  uid         String               @unique @db.VarChar(255)
   description String?              @db.Text
   image       String?              @db.Text
   topic       Topic                @relation(fields: [topicId], references: [id])
-  topicId     String
-  owner       String
+  topicId     String               @db.VarChar(255)
+  owner       String               @db.VarChar(255)
   addedBy     User                 @relation(fields: [userId], references: [id])
-  userId      String
+  userId      String               @db.VarChar(255)
   createdAt   DateTime             @default(now())
   updatedAt   DateTime?            @updatedAt
   videos      Video[]
@@ -143,15 +144,15 @@ model Playlist {
 }
 
 model Video {
-  id          String
-  title       String
+  id          String    @db.VarChar(255)
+  title       String    @db.VarChar(255)
   url         String?   @db.Text
-  videosrc    String?
-  publishedAt BigInt?
+  videosrc    String?   @db.VarChar(255)
+  publishedAt DateTime?
   description String?   @db.Text
   episodeNo   Int
   playlist    Playlist  @relation(fields: [playlistId], references: [id])
-  playlistId  String
+  playlistId  String    @db.VarChar(255)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime? @updatedAt
 
@@ -159,30 +160,68 @@ model Video {
 }
 
 model UserVideoSuggestion {
-  id        String   @id
-  url       String   @unique
-  urlType   String
+  id        String   @id @db.VarChar(255)
+  url       String   @unique @db.VarChar(255)
+  urlType   String   @db.VarChar(255)
   topic     Topic    @relation(fields: [topicId], references: [id])
-  topicId   String
+  topicId   String   @db.VarChar(255)
   addedBy   User     @relation(fields: [userId], references: [id])
-  userId    String
+  userId    String   @db.VarChar(255)
   status    STATUS   @default(PENDING)
   createdAt DateTime @default(now())
-}
-
-model BookmarkedPlaylist {
-  id         String   @id
-  user       User     @relation(fields: [userId], references: [id])
-  userId     String
-  playlist   Playlist @relation(fields: [playlistId], references: [id])
-  playlistId String
-  createdAt  DateTime @default(now())
-
-  @@unique(name: "bookmarkId", [userId, playlistId])
 }
 
 enum STATUS {
   APPROVED
   REJECTED
   PENDING
+}
+
+model BookmarkedPlaylist {
+  id         String   @id @db.VarChar(255)
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String   @db.VarChar(255)
+  playlist   Playlist @relation(fields: [playlistId], references: [id])
+  playlistId String   @db.VarChar(255)
+  createdAt  DateTime @default(now())
+
+  @@unique(name: "bookmarkId", [userId, playlistId])
+}
+
+model ArticleSource {
+  id        String             @id @db.VarChar(255)
+  url       String             @unique @db.VarChar(500)
+  name      String             @db.VarChar(255)
+  image     String?            @db.Text
+  status    ARTICESOURCESTATUS @default(ACTIVE)
+  createdAt DateTime           @default(now())
+  articles  Article[]
+}
+
+enum ARTICESOURCESTATUS {
+  ACTIVE
+  INACTIVE
+}
+
+model Article {
+  id              String        @id @db.VarChar(255)
+  title           String        @db.VarChar(255)
+  url             String        @unique @db.VarChar(500)
+  slug            String        @unique @db.VarChar(600)
+  content         String        @db.Text
+  description     String?       @db.Text
+  image           String?       @db.Text
+  pubDate         DateTime
+  articleSource   ArticleSource @relation(fields: [articleSourceId], references: [id])
+  articleSourceId String        @db.VarChar(255)
+  createdAt       DateTime      @default(now())
+  articleTags     ArticleTag[]
+}
+
+model ArticleTag {
+  id       String  @id @db.VarChar(255)
+  article  Article @relation(fields: [articeId], references: [id])
+  articeId String  @db.VarChar(255)
+  tag      Tag     @relation(fields: [tagId], references: [id])
+  tagId    String  @db.VarChar(255)
 }
