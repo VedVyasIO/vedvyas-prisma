@@ -98,11 +98,12 @@ model Tag {
 }
 
 model UserPreference {
-  id     String @id @db.VarChar(255)
   user   User   @relation(fields: [userId], references: [id])
   userId String @db.VarChar(255)
   tag    Tag    @relation(fields: [tagId], references: [id])
   tagId  String @db.VarChar(255)
+
+  @@id(name: "userPreferenceId", [userId, tagId])
 }
 
 model Topic {
@@ -119,11 +120,12 @@ model Topic {
 }
 
 model Topictag {
-  id      String @id @db.VarChar(255)
   topic   Topic  @relation(fields: [topicId], references: [id])
   topicId String @db.VarChar(255)
   tag     Tag    @relation(fields: [tagId], references: [id])
   tagId   String @db.VarChar(255)
+
+  @@id(name: "topicTagId", [topicId, tagId])
 }
 
 model Playlist {
@@ -219,9 +221,10 @@ model Article {
 }
 
 model ArticleTag {
-  id       String  @id @db.VarChar(255)
   article  Article @relation(fields: [articeId], references: [id])
   articeId String  @db.VarChar(255)
   tag      Tag     @relation(fields: [tagId], references: [id])
   tagId    String  @db.VarChar(255)
+
+  @@id(name: "articleTagId", [articeId, tagId])
 }

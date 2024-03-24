@@ -89,11 +89,10 @@ CREATE TABLE `Tag` (
 
 -- CreateTable
 CREATE TABLE `UserPreference` (
-    `id` VARCHAR(255) NOT NULL,
     `userId` VARCHAR(255) NOT NULL,
     `tagId` VARCHAR(255) NOT NULL,
 
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`userId`, `tagId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
@@ -113,11 +112,10 @@ CREATE TABLE `Topic` (
 
 -- CreateTable
 CREATE TABLE `Topictag` (
-    `id` VARCHAR(255) NOT NULL,
     `topicId` VARCHAR(255) NOT NULL,
     `tagId` VARCHAR(255) NOT NULL,
 
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`topicId`, `tagId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
@@ -211,11 +209,10 @@ CREATE TABLE `Article` (
 
 -- CreateTable
 CREATE TABLE `ArticleTag` (
-    `id` VARCHAR(255) NOT NULL,
     `articeId` VARCHAR(255) NOT NULL,
     `tagId` VARCHAR(255) NOT NULL,
 
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`articeId`, `tagId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
