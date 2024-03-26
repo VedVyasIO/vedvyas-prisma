@@ -32,7 +32,8 @@ model User {
   playlists            Playlist[]
   userVideoSuggestions UserVideoSuggestion[]
   bookmarkedPlaylists  BookmarkedPlaylist[]
-  UserSubmission       UserSubmission[]
+  userSubmissions      UserSubmission[]
+  participatedContests ContestUsersMapping[]
 }
 
 enum Roles {
@@ -232,17 +233,19 @@ model ArticleTag {
 }
 
 model Contest {
-  id            String         @id @db.VarChar(255)
-  title         String         @db.VarChar(500)
-  startDate     DateTime
-  endDate       DateTime
-  status        CONTESTSTATUS  @default(NOTSTARTED)
-  topic         Topic          @relation(fields: [topicId], references: [id])
-  topicId       String         @db.VarChar(255)
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime?      @updatedAt
-  contestDetail ContestDetail?
-  challengeSet  ChallengeSet?
+  id              String                @id @db.VarChar(255)
+  title           String                @db.VarChar(500)
+  startDate       DateTime
+  endDate         DateTime
+  status          CONTESTSTATUS         @default(NOTSTARTED)
+  topic           Topic                 @relation(fields: [topicId], references: [id])
+  topicId         String                @db.VarChar(255)
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime?             @updatedAt
+  contestDetail   ContestDetail?
+  challengeSet    ChallengeSet?
+  userSubmissions UserSubmission[]
+  registeredUsers ContestUsersMapping[]
 }
 
 enum CONTESTSTATUS {
@@ -326,10 +329,22 @@ model ChallengeOption {
   createdAt   DateTime  @default(now())
 }
 
+model ContestUsersMapping {
+  contest   Contest  @relation(fields: [contestId], references: [id])
+  contestId String   @db.VarChar(255)
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+
+  @@id([contestId, userId])
+}
+
 model UserSubmission {
   id          String    @id @db.VarChar(255)
   url         String?   @db.Text
   submission  String?   @db.Text
+  contest     Contest   @relation(fields: [contestId], references: [id])
+  contestId   String    @db.VarChar(255)
   challenge   Challenge @relation(fields: [challengeId], references: [id])
   challengeId String    @db.VarChar(255)
   user        User      @relation(fields: [userId], references: [id])
