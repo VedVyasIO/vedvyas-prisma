@@ -32,6 +32,7 @@ model User {
   playlists            Playlist[]
   userVideoSuggestions UserVideoSuggestion[]
   bookmarkedPlaylists  BookmarkedPlaylist[]
+  UserSubmission       UserSubmission[]
 }
 
 enum Roles {
@@ -117,6 +118,7 @@ model Topic {
   topicTags            Topictag[]
   playlists            Playlist[]
   userVideoSuggestions UserVideoSuggestion[]
+  contests             Contest[]
 }
 
 model Topictag {
@@ -227,4 +229,110 @@ model ArticleTag {
   tagId    String  @db.VarChar(255)
 
   @@id(name: "articleTagId", [articeId, tagId])
+}
+
+model Contest {
+  id            String         @id @db.VarChar(255)
+  title         String         @db.VarChar(500)
+  startDate     DateTime
+  endDate       DateTime
+  status        CONTESTSTATUS  @default(NOTSTARTED)
+  topic         Topic          @relation(fields: [topicId], references: [id])
+  topicId       String         @db.VarChar(255)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime?      @updatedAt
+  contestDetail ContestDetail?
+  challengeSet  ChallengeSet?
+}
+
+enum CONTESTSTATUS {
+  NOTSTARTED
+  STARTED
+  COMPLETED
+  DISCARDED
+}
+
+model ContestDetail {
+  contestId     String  @id @db.VarChar(255)
+  contest       Contest @relation(fields: [contestId], references: [id])
+  description   String  @db.Text
+  importantNote String  @db.Text
+  sponsoredNote String  @db.Text
+  announcement  String  @db.Text
+}
+
+model ChallengeSet {
+  id                             String                          @id @db.VarChar(255)
+  title                          String                          @db.VarChar(500)
+  description                    String                          @db.Text
+  contestId                      String?                         @unique @db.VarChar(255)
+  contest                        Contest?                        @relation(fields: [contestId], references: [id])
+  createdAt                      DateTime                        @default(now())
+  updatedAt                      DateTime?                       @updatedAt
+  challengeSetsChallengeMappings ChallengeSetsChallengeMapping[]
+}
+
+model Challenge {
+  id                             String                          @id @db.VarChar(255)
+  title                          String                          @db.VarChar(500)
+  level                          CHALLENGEDIFFICULTYLEVEL        @default(EASY)
+  type                           CHALLENGETYPE
+  description                    String                          @db.Text
+  createdAt                      DateTime                        @default(now())
+  updatedAt                      DateTime?                       @updatedAt
+  challengeSetsChallengeMappings ChallengeSetsChallengeMapping[]
+  testCases                      TestCase[]
+  challengeOption                ChallengeOption?
+  userSubmissions                UserSubmission[]
+}
+
+enum CHALLENGEDIFFICULTYLEVEL {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum CHALLENGETYPE {
+  CODING
+  QNA
+  SUBMISSION
+}
+
+model ChallengeSetsChallengeMapping {
+  challenge      Challenge    @relation(fields: [challengeId], references: [id])
+  challengeId    String       @db.VarChar(255)
+  challengeSet   ChallengeSet @relation(fields: [challengeSetId], references: [id])
+  challengeSetId String       @db.VarChar(255)
+  createdAt      DateTime     @default(now())
+
+  @@id([challengeId, challengeSetId])
+}
+
+model TestCase {
+  id          String    @id @db.VarChar(255)
+  input       String    @db.Text
+  output      String    @db.Text
+  challenge   Challenge @relation(fields: [challengeId], references: [id])
+  challengeId String    @db.VarChar(255)
+  createdAt   DateTime  @default(now())
+}
+
+model ChallengeOption {
+  id          String    @id @db.VarChar(255)
+  options     String    @db.Text
+  answer      String    @db.Text
+  challenge   Challenge @relation(fields: [challengeId], references: [id])
+  challengeId String    @unique @db.VarChar(255)
+  createdAt   DateTime  @default(now())
+}
+
+model UserSubmission {
+  id          String    @id @db.VarChar(255)
+  url         String?   @db.Text
+  submission  String?   @db.Text
+  challenge   Challenge @relation(fields: [challengeId], references: [id])
+  challengeId String    @db.VarChar(255)
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String    @db.VarChar(255)
+  createdAt   DateTime  @default(now())
 }
