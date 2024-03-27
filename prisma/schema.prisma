@@ -34,6 +34,11 @@ model User {
   bookmarkedPlaylists  BookmarkedPlaylist[]
   userSubmissions      UserSubmission[]
   participatedContests ContestUsersMapping[]
+  Contest              Contest[]
+  ChallengeSet         ChallengeSet[]
+  Challenge            Challenge[]
+  TestCase             TestCase[]
+  ChallengeOption      ChallengeOption[]
 }
 
 enum Roles {
@@ -240,6 +245,8 @@ model Contest {
   status          CONTESTSTATUS         @default(NOTSTARTED)
   topic           Topic                 @relation(fields: [topicId], references: [id])
   topicId         String                @db.VarChar(255)
+  createdBy       User                  @relation(fields: [userId], references: [id])
+  userId          String                @db.VarChar(255)
   createdAt       DateTime              @default(now())
   updatedAt       DateTime?             @updatedAt
   contestDetail   ContestDetail?
@@ -270,6 +277,8 @@ model ChallengeSet {
   description                    String                          @db.Text
   contestId                      String?                         @unique @db.VarChar(255)
   contest                        Contest?                        @relation(fields: [contestId], references: [id])
+  createdBy                      User                            @relation(fields: [userId], references: [id])
+  userId                         String                          @db.VarChar(255)
   createdAt                      DateTime                        @default(now())
   updatedAt                      DateTime?                       @updatedAt
   challengeSetsChallengeMappings ChallengeSetsChallengeMapping[]
@@ -281,6 +290,8 @@ model Challenge {
   level                          CHALLENGEDIFFICULTYLEVEL        @default(EASY)
   type                           CHALLENGETYPE
   description                    String                          @db.Text
+  createdBy                      User                            @relation(fields: [userId], references: [id])
+  userId                         String                          @db.VarChar(255)
   createdAt                      DateTime                        @default(now())
   updatedAt                      DateTime?                       @updatedAt
   challengeSetsChallengeMappings ChallengeSetsChallengeMapping[]
@@ -317,6 +328,8 @@ model TestCase {
   output      String    @db.Text
   challenge   Challenge @relation(fields: [challengeId], references: [id])
   challengeId String    @db.VarChar(255)
+  createdBy   User      @relation(fields: [userId], references: [id])
+  userId      String    @db.VarChar(255)
   createdAt   DateTime  @default(now())
 }
 
@@ -326,6 +339,8 @@ model ChallengeOption {
   answer      String    @db.Text
   challenge   Challenge @relation(fields: [challengeId], references: [id])
   challengeId String    @unique @db.VarChar(255)
+  createdBy   User      @relation(fields: [userId], references: [id])
+  userId      String    @db.VarChar(255)
   createdAt   DateTime  @default(now())
 }
 
